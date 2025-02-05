@@ -1,6 +1,6 @@
 package com.example.petservice.controller;
 
-import com.example.petservice.model.Pet;
+import com.example.petservice.model.Pet;  // ✅ Используем правильный Pet
 import com.example.petservice.repository.PetRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,25 +17,21 @@ public class PetController {
         this.petRepository = petRepository;
     }
 
-    // Получение всех питомцев
     @GetMapping
     public List<Pet> getAllPets() {
         return petRepository.findAll();
     }
 
-    // Получение питомцев по типу
     @GetMapping("/type/{type}")
     public List<Pet> getPetsByType(@PathVariable String type) {
         return petRepository.findByType(type);
     }
 
-    // Добавление нового питомца
     @PostMapping
     public Pet createPet(@RequestBody Pet pet) {
         return petRepository.save(pet);
     }
 
-    // Обновление информации о питомце
     @PutMapping("/{id}")
     public ResponseEntity<Pet> updatePet(@PathVariable Long id, @RequestBody Pet petDetails) {
         Optional<Pet> optionalPet = petRepository.findById(id);
@@ -50,7 +46,6 @@ public class PetController {
         }
     }
 
-    // Удаление питомца
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePet(@PathVariable Long id) {
         if (petRepository.existsById(id)) {
